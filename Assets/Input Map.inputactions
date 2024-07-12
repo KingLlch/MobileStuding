@@ -1,0 +1,74 @@
+{
+    "name": "Input Map",
+    "maps": [
+        {
+            "name": "TouchScreen",
+            "id": "20e72662-ea63-4fc7-a684-14dfc4b27292",
+            "actions": [
+                {
+                    "name": "JoyStickTouch",
+                    "type": "Button",
+                    "id": "c2deb60a-0a8d-4323-bf16-e2845a2ed36a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "JoyStickPosition",
+                    "type": "Value",
+                    "id": "6a5cf256-4c25-4abf-9edf-8a11917ee90b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "JoyStick",
+                    "type": "Value",
+                    "id": "6bfef2dc-83da-439f-972d-583a55574bce",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a5dcf97d-78e7-4723-93db-831f59f98146",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JoyStickTouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fe1cbb1b-c3f3-4a60-9ff2-0d778a34da8b",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JoyStickPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8dfec0fb-bf76-4020-8361-cdfefca48c5d",
+                    "path": "<Touchscreen>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JoyStick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
