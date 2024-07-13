@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float SpawnDelay = 2f;
+    private float spawnRadius = 10;
+
+    [SerializeField] private Enemy Enemy;
+    private Coroutine SpawnEnemyCoroutine;
+
+    private void Awake()
     {
-        
+        SpawnEnemyCoroutine = StartCoroutine(SpawnEnemy());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator SpawnEnemy()
     {
-        
+
+        while (true)
+        {
+            int spawnDegree = Random.Range(0, 360);
+            Vector3 spawnPoint = new Vector3(Mathf.Sin(-spawnDegree * Mathf.Deg2Rad) * spawnRadius, Mathf.Cos(-spawnDegree * Mathf.Deg2Rad) * spawnRadius, 0);
+            Instantiate(Enemy, spawnPoint, Quaternion.identity, null);
+            yield return new WaitForSeconds(SpawnDelay);
+        }
+    }
+
+    public void StopSpawn()
+    {
+        StopCoroutine(SpawnEnemyCoroutine);
     }
 }

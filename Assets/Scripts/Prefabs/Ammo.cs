@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Ammo : MonoBehaviour
 {
-    private float speed = 5f;
+    private float speed = 10f;
     private int penetration = 1;
     private float damage = 1;
 
@@ -39,10 +39,11 @@ public class Ammo : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            penetration--;
 
             if (penetration <= 0)
             {
-                Destroy (gameObject);
+                Destroy(gameObject);
             }
         }
     }

@@ -21,7 +21,7 @@ public class AmmoFactory : MonoBehaviour
     {
         while (true)
         {
-            GameObject newAmmo = Instantiate(ammo, transform.position,transform.parent.rotation, null);
+            GameObject newAmmo = Instantiate(ammo, transform.position, transform.parent.rotation, null);
             newAmmo.GetComponentInChildren<Ammo>().Initialize(speedModifier, damageModifier, penetrationModifier, transform.parent.rotation.eulerAngles.z);
             yield return new WaitForSeconds(ShootDelay);
         }

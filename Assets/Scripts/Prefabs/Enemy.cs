@@ -8,10 +8,12 @@ public class Enemy : MonoBehaviour
 
     [field: SerializeField] public float Health { get; private set; } = 5;
 
-    private float speed = 0.05f;
+    private float speed = 0.02f;
     private float damage = 1f;
 
     private Coroutine MoveToPlayerCoroutine;
+
+    [SerializeField] private GameObject experience;
 
     private void Awake()
     {
@@ -25,6 +27,9 @@ public class Enemy : MonoBehaviour
         if (Health <= 0)
         {
             StopCoroutine(MoveToPlayerCoroutine);
+
+            Instantiate(experience, transform.position, Quaternion.identity, null);
+
             Destroy(gameObject);
         }
     }
@@ -39,7 +44,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {

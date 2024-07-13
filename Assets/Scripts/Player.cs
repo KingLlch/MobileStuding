@@ -10,10 +10,16 @@ public class Player : MonoBehaviour
     [field: SerializeField] public float MaxHealth { get; private set; } = 100;
     [field: SerializeField] public float Health { get; private set; } = 100;
 
-    private Coroutine _takeDamageIntervalCoroutine;
-    private bool _takeDamageInterval;
+    [field: SerializeField] public float MaxExperience { get; private set; } = 100;
+    [field: SerializeField] public float Experience { get; private set; } = 0;
+    [field: SerializeField] public float Level { get; private set; } = 0;
 
-    [HideInInspector] public UnityEvent<float,float> ChangeHealth;
+    private Coroutine _takeDamageIntervalCoroutine;
+    private bool _takeDamageInterval = true;
+
+    [HideInInspector] public UnityEvent<float, float> ChangeHealth;
+    [HideInInspector] public UnityEvent<float, float> ChangeExperience;
+    [HideInInspector] public UnityEvent<float> ChangeLevel;
 
     public static Player Instance
     {
@@ -33,7 +39,24 @@ public class Player : MonoBehaviour
         _instance = this;
 
         ChangeHealth.Invoke(Health, MaxHealth);
+        ChangeExperience.Invoke(Experience, MaxExperience);
+        ChangeLevel.Invoke(Level);
+
         _takeDamageIntervalCoroutine = StartCoroutine(TakeDamageInterval());
+    }
+
+    public void TakeExperience(float expValue)
+    {
+        Experience += expValue;
+
+        if (Experience == MaxExperience)
+        {
+            ChangeLevel.Invoke(Level);
+            Experience = 0;
+            MaxExperience += 10;
+        }
+
+        ChangeExperience.Invoke(Experience, MaxExperience);
     }
 
     public void TakeDamage(float damage)
@@ -54,13 +77,12 @@ public class Player : MonoBehaviour
 
     private IEnumerator TakeDamageInterval()
     {
-        while (true) 
+        while (true)
         {
             if (!_takeDamageInterval)
-           _takeDamageInterval = true;
+                _takeDamageInterval = true;
 
-           yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f);
         }
-
     }
 }

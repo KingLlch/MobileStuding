@@ -3,7 +3,7 @@ using UnityEngine;
 public class MoveManager : MonoBehaviour
 {
     [SerializeField] private InputController _inputController;
-    [SerializeField] private float speed = 0.02f;
+    [SerializeField] private float speed = 0.01f;
 
     private void Awake()
     {

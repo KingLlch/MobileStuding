@@ -35,7 +35,7 @@ public class InputController : MonoBehaviour
         {
             input += context.ReadValue<Vector2>();
 
-            joystickPosition = Vector2.ClampMagnitude(input/10, 1.0f) * handleRange;
+            joystickPosition = Vector2.ClampMagnitude(input / 10, 1.0f) * handleRange;
 
             _touchHandle.anchoredPosition = joystickPosition;
 
@@ -45,6 +45,7 @@ public class InputController : MonoBehaviour
 
     private void OnStop(InputAction.CallbackContext context)
     {
+        isTouchInZone = false;
         direction = Vector2.zero;
         input = Vector2.zero;
         _touchHandle.localPosition = Vector2.zero;
