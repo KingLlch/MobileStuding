@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,11 +9,16 @@ public class Player : MonoBehaviour
     [field: SerializeField] public float MaxHealth { get; private set; } = 100;
     [field: SerializeField] public float Health { get; private set; } = 100;
 
+    [field: SerializeField] public float Regeneration { get; private set; } = 1;
+    [field: SerializeField] public float RegenerationInterval { get; private set; } = 10;
+
     [field: SerializeField] public float MaxExperience { get; private set; } = 100;
-    [field: SerializeField] public float Experience { get; private set; } = 0;
+    [field: SerializeField] public float Experience { get; private set; } = 99;
     [field: SerializeField] public float Level { get; private set; } = 0;
 
     private Coroutine _takeDamageIntervalCoroutine;
+    private Coroutine _regenerationCoroutine;
+
     private bool _takeDamageInterval = true;
 
     [HideInInspector] public UnityEvent<float, float> ChangeHealth;
@@ -38,11 +42,15 @@ public class Player : MonoBehaviour
     {
         _instance = this;
 
+        _takeDamageIntervalCoroutine = StartCoroutine(TakeDamageInterval());
+        _regenerationCoroutine = StartCoroutine(RegenerationCoroutine());
+    }
+
+    private void Start()
+    {
         ChangeHealth.Invoke(Health, MaxHealth);
         ChangeExperience.Invoke(Experience, MaxExperience);
         ChangeLevel.Invoke(Level);
-
-        _takeDamageIntervalCoroutine = StartCoroutine(TakeDamageInterval());
     }
 
     public void TakeExperience(float expValue)
@@ -67,11 +75,26 @@ public class Player : MonoBehaviour
 
             if (Health <= 0)
             {
-
+                //gameover
             }
 
             ChangeHealth.Invoke(Health, MaxHealth);
             _takeDamageInterval = false;
+        }
+    }
+
+    public void TakeHealth(float health)
+    {
+        if (_takeDamageInterval)
+        {
+            Health += health;
+
+            if (Health > MaxHealth)
+            {
+                Health = MaxHealth;
+            }
+
+            ChangeHealth.Invoke(Health, MaxHealth);
         }
     }
 
@@ -84,5 +107,21 @@ public class Player : MonoBehaviour
 
             yield return new WaitForSeconds(1f);
         }
+    }
+
+    private IEnumerator RegenerationCoroutine()
+    {
+        while (true)
+        {
+            TakeHealth(Regeneration);
+            yield return new WaitForSeconds(RegenerationInterval);
+        }
+    }
+
+    public void ChangeModifiers(float maxHealth, float regeneration, float regenerationInterval)
+    {
+        MaxHealth += maxHealth;
+        Regeneration += regeneration;
+        RegenerationInterval -= regenerationInterval;
     }
 }

@@ -69,6 +69,6 @@ public class InputController : MonoBehaviour
 
     private void Update()
     {
-        if (direction != Vector2.zero) Move();
+        if ((direction != Vector2.zero) && !GameManager.Instance.IsPause) Move();
     }
 }

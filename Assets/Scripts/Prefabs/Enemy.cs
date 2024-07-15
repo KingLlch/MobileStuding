@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -29,6 +28,8 @@ public class Enemy : MonoBehaviour
             StopCoroutine(MoveToPlayerCoroutine);
 
             Instantiate(experience, transform.position, Quaternion.identity, null);
+
+            EnemySpawner.Instance.EnemyList.Remove(this);
 
             Destroy(gameObject);
         }
