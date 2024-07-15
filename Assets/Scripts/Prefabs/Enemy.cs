@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 
     [field: SerializeField] public float Health { get; private set; } = 5;
 
-    private float speed = 0.02f;
+    private float speed;
     private float damage = 1f;
 
     private Coroutine MoveToPlayerCoroutine;
@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         MoveToPlayerCoroutine = StartCoroutine(MoveToPlayer());
+        speed = Random.Range(0.01f, 0.04f);
     }
 
     public void TakeDamage(float damage)

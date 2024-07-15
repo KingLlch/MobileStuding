@@ -38,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator SpawnEnemy()
     {
 
-        while (true && maxEnemy < EnemyList.Count)
+        while (true && maxEnemy > EnemyList.Count)
         {
             int spawnDegree = Random.Range(0, 360);
             Vector3 spawnPoint = new Vector3(Mathf.Sin(-spawnDegree * Mathf.Deg2Rad) * spawnRadius, Mathf.Cos(-spawnDegree * Mathf.Deg2Rad) * spawnRadius, 0);

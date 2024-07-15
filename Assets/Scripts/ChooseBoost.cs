@@ -52,7 +52,7 @@ public class ChooseBoost : MonoBehaviour
     {
         switch (randomBoost[number])
         {
-            case 0: Player.Instance.ChangeModifiers(_maxHealth, 0, 0); break;
+            case 0: Player.Instance.ChangeModifiers(_maxHealth, 0, 0); Player.Instance.TakeHealth(_maxHealth); break;
             case 1: Player.Instance.ChangeModifiers(0, _regeneration, 0); break;
             case 2: Player.Instance.ChangeModifiers(0, 0, _regenerationInterval); break;
             case 3: AmmoFactory.Instance.ChangeAmmoModifiers(_shootDelay, 0, 0, 0); break;

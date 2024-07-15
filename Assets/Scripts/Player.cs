@@ -50,17 +50,19 @@ public class Player : MonoBehaviour
     {
         ChangeHealth.Invoke(Health, MaxHealth);
         ChangeExperience.Invoke(Experience, MaxExperience);
-        ChangeLevel.Invoke(Level);
     }
 
     public void TakeExperience(float expValue)
     {
         Experience += expValue;
 
-        if (Experience == MaxExperience)
+        if (Experience >= MaxExperience)
         {
             ChangeLevel.Invoke(Level);
-            Experience = 0;
+            
+            Experience = Experience - MaxExperience;
+            if (Experience < 0) Experience = 0;
+
             MaxExperience += 10;
         }
 
