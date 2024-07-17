@@ -18,6 +18,6 @@ public class MoveManager : MonoBehaviour
 
     private void Rotate(Vector2 rotate)
     {
-        transform.rotation = Quaternion.Euler(0, 0, -Mathf.Atan2(rotate.x, rotate.y) * Mathf.Rad2Deg); ;
+        transform.rotation = Quaternion.Euler(0, 0, -Mathf.Atan2(rotate.x, rotate.y) * Mathf.Rad2Deg);
     }
 }

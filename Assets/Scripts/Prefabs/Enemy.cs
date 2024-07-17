@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
@@ -41,7 +42,10 @@ public class Enemy : MonoBehaviour
         while (true)
         {
             playerPosition = Player.Instance.transform.position;
-            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, playerPosition, speed /**Time.deltaTime*/);
+            transform.position = Vector3.MoveTowards(transform.position, playerPosition, speed /**Time.deltaTime*/);
+
+            Vector3 rotate = playerPosition - transform.position;
+            transform.rotation = Quaternion.Euler(0, 0, -Mathf.Atan2(rotate.x, rotate.y) * Mathf.Rad2Deg);
             yield return new WaitForSeconds(0.02f);
         }
     }
@@ -50,6 +54,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            if (collision.GetComponent<Player>().TakeDamageIntervalBool)
             collision.GetComponent<Player>().TakeDamage(damage);
         }
     }

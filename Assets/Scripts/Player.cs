@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private Coroutine _takeDamageIntervalCoroutine;
     private Coroutine _regenerationCoroutine;
 
-    private bool _takeDamageInterval = true;
+    public bool TakeDamageIntervalBool = true;
 
     [HideInInspector] public UnityEvent<float, float> ChangeHealth;
     [HideInInspector] public UnityEvent<float, float> ChangeExperience;
@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
         if (Experience >= MaxExperience)
         {
             ChangeLevel.Invoke(Level);
-            
+
             Experience = Experience - MaxExperience;
             if (Experience < 0) Experience = 0;
 
@@ -71,23 +71,20 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (_takeDamageInterval)
+        Health -= damage;
+
+        if (Health <= 0)
         {
-            Health -= damage;
-
-            if (Health <= 0)
-            {
-                //gameover
-            }
-
-            ChangeHealth.Invoke(Health, MaxHealth);
-            _takeDamageInterval = false;
+            //gameover
         }
+
+        ChangeHealth.Invoke(Health, MaxHealth);
+        TakeDamageIntervalBool = false;
     }
 
     public void TakeHealth(float health)
     {
-        if (_takeDamageInterval)
+        if (TakeDamageIntervalBool)
         {
             Health += health;
 
@@ -104,8 +101,8 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            if (!_takeDamageInterval)
-                _takeDamageInterval = true;
+            if (!TakeDamageIntervalBool)
+                TakeDamageIntervalBool = true;
 
             yield return new WaitForSeconds(1f);
         }
